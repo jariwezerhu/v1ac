@@ -425,6 +425,12 @@ def test_limit(limit_left, limit_right, limit):
             else:
                 return x-2
 
+        def broken_linear(self, x: float) -> float:
+            return (x**2 - 4*x + 3) / (x - 3)
+
+        def broken_sin(self, x: float) -> float:
+            return (x**2 + 2*x - 8) / math.sin(x - 2)
+
         def test_single_discontinuity(self):
             np.testing.assert_equal(limit(self.single_discontinuity_function,72), 180)
         def test_holes(self):
@@ -439,6 +445,10 @@ def test_limit(limit_left, limit_right, limit):
             np.testing.assert_almost_equal(limit_right(self.piecewise_function,1), -1, 3)
         def test_jump(self):
             np.testing.assert_equal(limit(self.piecewise_function,1), None)
+        def test_broken_linear(self):
+            np.testing.assert_almost_equal(limit(self.broken_linear,3), 2, 3)
+        def test_broken_sin(self):
+            np.testing.assert_almost_equal(limit(self.broken_sin,2), 6, 3)
 
     display(Markdown(r"""### Tests
 | **Test** | **Betekenis** |
